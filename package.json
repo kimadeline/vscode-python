@@ -3232,6 +3232,8 @@
         "lint-staged": "node gulpfile.js",
         "lint": "tslint src/**/*.ts -t verbose",
         "prettier-fix": "prettier 'src/**/*.ts*' --write && prettier 'build/**/*.js' --write",
+        "eslint": "eslint --ext ts,tsx src/* --no-error-on-unmatched-pattern",
+        "eslint-fix": "eslint --ext ts,tsx src/* --no-error-on-unmatched-pattern --fix && eslint build/* --no-error-on-unmatched-pattern  --fix",
         "clean": "gulp clean",
         "updateBuildNumber": "gulp updateBuildNumber",
         "verifyBundle": "gulp verifyBundle",
