@@ -287,12 +287,12 @@ jobs:
         if: matrix.test-suite == 'ts-unit' && startsWith(matrix.python, 3.)
 
       # Upload unit test coverage reports for later use in the "reports" job.
-      - name: Upload unit test coverage reports
-        uses: actions/upload-artifact@v1
-        with:
-          name: ${{runner.os}}-${{env.COVERAGE_REPORTS}}
-          path: .nyc_output
-        if: matrix.test-suite == 'ts-unit' && startsWith(matrix.python, 3.)
+      # - name: Upload unit test coverage reports
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: ${{runner.os}}-${{env.COVERAGE_REPORTS}}
+      #     path: .nyc_output
+      #   if: matrix.test-suite == 'ts-unit' && startsWith(matrix.python, 3.)
 
       # Run the Python and IPython tests in our codebase.
       - name: Run Python and IPython unit tests
