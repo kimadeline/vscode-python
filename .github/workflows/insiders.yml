@@ -17,6 +17,12 @@ env:
   VSIX_NAME: ms-python-insiders.vsix
   COVERAGE_REPORTS: tests-coverage-reports
   TEST_RESULTS_DIRECTORY: .
+  REPO_DIRECTORY: 'test with spaces'
+
+defaults:
+  run:
+    # Cannot use context or expressions in defaults
+    working-directory: 'test with spaces'
 
 jobs:
   build-vsix:
@@ -138,6 +144,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          path: ${{ env.REPO_DIRECTORY }}
 
       - name: Cache pip files
         uses: actions/cache@v2
@@ -156,7 +164,7 @@ jobs:
         id: out-cache
         uses: actions/cache@v2
         with:
-          path: ./out
+          path: ${{ env.REPO_DIRECTORY }}/out
           key: ${{runner.os}}-${{env.CACHE_OUT_DIRECTORY}}-${{hashFiles('src/**')}}
 
       - name: Install dependencies (npm ci)
@@ -314,6 +322,7 @@ jobs:
         uses: GabrielBB/xvfb-action@v1.4
         with:
           run: npm run testSingleWorkspace
+          working-directory: ${{ env.REPO_DIRECTORY }}
         if: matrix.test-suite == 'venv'
 
       - name: Run single-workspace tests
@@ -322,6 +331,7 @@ jobs:
         uses: GabrielBB/xvfb-action@v1.4
         with:
           run: npm run testSingleWorkspace
+          working-directory: ${{ env.REPO_DIRECTORY }}
         if: matrix.test-suite == 'single-workspace'
 
       - name: Run multi-workspace tests
@@ -330,6 +340,7 @@ jobs:
         uses: GabrielBB/xvfb-action@v1.4
         with:
           run: npm run testMultiWorkspace
+          working-directory: ${{ env.REPO_DIRECTORY }}
         if: matrix.test-suite == 'multi-workspace'
 
       - name: Run debugger tests
@@ -338,6 +349,7 @@ jobs:
         uses: GabrielBB/xvfb-action@v1.4
         with:
           run: npm run testDebugger
+          working-directory: ${{ env.REPO_DIRECTORY }}
         if: matrix.test-suite == 'debugger'
 
       - name: Run functional tests
